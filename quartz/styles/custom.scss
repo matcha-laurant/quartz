@@ -1,3 +1,119 @@
 @use "./base.scss";
 
 // put your custom CSS here!
+
+/* 极简右侧信息框 */
+.callout[data-callout="infobox"] {
+    /* 布局控制 */
+    float: right;
+    clear: right;
+    width: 300px;
+    margin: 0 0 1em 1em;
+    
+    /* 隐藏图标 */
+    .callout-icon {
+        display: none;
+    }
+    
+    /* 标题居中 */
+    .callout-title-inner {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .callout-title {
+        justify-content: center;
+    }
+    
+    /* 为高亮语法创建的小标题样式 */
+    mark {
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        line-height: inherit;
+        font-size: 0.9em;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: none !important; /* 去掉高亮背景色 */
+        color: inherit !important; /* 继承文字颜色 */
+        -webkit-text-fill-color: inherit; /* 确保 Safari 也继承颜色 */
+        all: unset; /* 重置所有属性 */
+        all: revert; /* 先重置 */
+        display: inline-block; /* 再重新设置 */
+        text-align: center;
+        font-weight: bold;
+        line-height: inherit;
+        font-size: 0.9em;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+}
+
+/* 清除浮动 */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.markdown-preview-view hr {
+    clear: right;
+}
+
+/* 移动设备响应式 */
+@media (max-width: 768px) {
+    .callout[data-callout="infobox"] {
+        float: none;
+        width: 100%;
+        margin: 1em 0;
+    }
+    
+    .markdown-preview-view h1,
+    .markdown-preview-view h2,
+    .markdown-preview-view h3,
+    .markdown-preview-view h4,
+    .markdown-preview-view h5,
+    .markdown-preview-view h6,
+    .markdown-preview-view hr {
+        clear: none;
+    }
+}
+
+
+/* 黑幕容器：默认隐藏文字 */
+.heimu {
+    background-color: #252525 !important;
+    color: #252525 !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    transition: color 0.13s linear !important;
+    padding: 0 2px !important;
+    border-radius: 2px !important;
+}
+
+/* 强制让内部所有元素继承父色 */
+.heimu *,
+.heimu *::before,
+.heimu *::after {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
+
+/* 鼠标悬停时所有文字显现 */
+.heimu:hover,
+.heimu:hover * {
+    color: #ffffff !important;
+    cursor: help !important;
+}
+
+/* 深色模式适配（同样逻辑） */
+.theme-dark .heimu {
+    background-color: #000000 !important;
+    color: #000000 !important;
+}
+.theme-dark .heimu:hover,
+.theme-dark .heimu:hover * {
+    color: #ffffff !important;
+}
