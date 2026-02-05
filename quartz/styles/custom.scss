@@ -1,146 +1,130 @@
 @use "./base.scss";
 
 // put your custom CSS here!
-
-/* =========================
-   Wiki Infobox 基础容器
-   ========================= */
+/* ===== Infobox 样式（右侧浮动信息框）===== */
 
 .callout[data-callout="infobox"] {
-  float: right;
-  clear: right;
-  width: 300px;
-  margin: 0 0 1em 1em;
-  padding: 1em;
-
-  border-radius: 12px;
-  background: var(--background-secondary);
-  border: 1px solid var(--color-border-muted);
-  font-size: 0.9em;
+    /* 布局控制 */
+    float: right;
+    clear: right;
+    width: 300px;
+    margin: 0 0 1em 1em;
 }
 
-/* 隐藏 callout 默认图标 */
+/* 隐藏 callout 图标 */
 .callout[data-callout="infobox"] .callout-icon {
-  display: none;
+    display: none;
 }
 
-/* 顶部标题（角色名） */
+/* 标题居中 */
 .callout[data-callout="infobox"] .callout-title {
-  justify-content: center;
+    justify-content: center;
 }
 
 .callout[data-callout="infobox"] .callout-title-inner {
-  font-size: 1.15em;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-align: center;
+    text-align: center;
+    width: 100%;
 }
 
-/* =========================
-   居中小标题（替代高亮）
-   使用 <div class="infobox-subtitle">
-   ========================= */
-
-.infobox-subtitle {
-  display: block;
-  margin: 0.9em 0 0.5em;
-  padding: 0.3em 0;
-
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-
-  opacity: 0.9;
-  border-top: 1px solid var(--color-border-muted);
-  border-bottom: 1px solid var(--color-border-muted);
+/* 高亮语法 → 居中加粗小标题（无额外美化）*/
+.callout[data-callout="infobox"] mark {
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    line-height: inherit;
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: none !important;
+    color: inherit !important;
 }
 
-/* =========================
-   Tabs 内图片区（可选）
-   ========================= */
-
-.callout[data-callout="infobox"] img {
-  display: block;
-  margin: 0.5em auto;
-  border-radius: 8px;
-  max-width: 100%;
-}
-
-/* =========================
-   heimu：深浅模式反色 · 稳定版
-   ========================= */
+/* ===== 黑幕效果（隐藏文字和双链）===== */
 
 .heimu {
-  position: relative;
-  padding: 0 0.3em;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: color 0.15s ease;
+    background-color: #252525 !important;
+    color: #252525 !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    transition: color 0.13s linear !important;
+    padding: 0 2px !important;
+    border-radius: 2px !important;
 }
 
-/* 默认：隐藏所有文字（包括双链） */
-.heimu,
-.heimu * {
-  color: transparent !important;
-  text-decoration: none !important;
+/* 强制让内部所有元素（包括链接）继承黑幕颜色 */
+.heimu *,
+.heimu a,
+.heimu a:visited,
+.heimu *::before,
+.heimu *::after {
+    color: inherit !important;
+    text-decoration: inherit !important;
+    background: transparent !important;
 }
 
-/* ========== 浅色模式 ==========
-   条件：没有进入任何 dark 判定
-   表现：黑幕 → hover 白字
-*/
-body:not(.dark)
-  :not(html[data-theme="dark"])
-  :not(.theme-dark)
-  .heimu {
-  background: rgba(0, 0, 0, 0.88);
+/* 移除链接的特殊样式 */
+.heimu a {
+    border-bottom: none !important;
 }
 
-body:not(.dark)
-  :not(html[data-theme="dark"])
-  :not(.theme-dark)
-  .heimu:hover,
-body:not(.dark)
-  :not(html[data-theme="dark"])
-  :not(.theme-dark)
-  .heimu:hover * {
-  color: #ffffff !important;
+/* 鼠标悬停时所有文字显现 */
+.heimu:hover,
+.heimu:hover *,
+.heimu:hover a {
+    color: #ffffff !important;
+    cursor: help !important;
 }
 
-/* ========== 深色模式 ==========
-   命中任意一个即可
-*/
-body.dark .heimu,
-html[data-theme="dark"] .heimu,
-.theme-dark .heimu {
-  background: rgba(255, 255, 255, 0.9);
+.heimu:hover a {
+    text-decoration: underline !important;
 }
 
-body.dark .heimu:hover,
-body.dark .heimu:hover *,
-html[data-theme="dark"] .heimu:hover,
-html[data-theme="dark"] .heimu:hover *,
-.theme-dark .heimu:hover,
-.theme-dark .heimu:hover * {
-  color: #000000 !important;
+/* 深色模式适配 */
+:root[saved-theme="dark"] .heimu {
+    background-color: #f0f0f0 !important;
+    color: #f0f0f0 !important;
 }
 
-
-/* =========================
-   列表与文本微调
-   ========================= */
-
-.callout[data-callout="infobox"] ul,
-.callout[data-callout="infobox"] ol {
-  padding-left: 1.2em;
-  margin: 0.4em 0;
+:root[saved-theme="dark"] .heimu *,
+:root[saved-theme="dark"] .heimu a {
+    color: #f0f0f0 !important;
 }
 
-.callout[data-callout="infobox"] li {
-  line-height: 1.5;
+:root[saved-theme="dark"] .heimu:hover,
+:root[saved-theme="dark"] .heimu:hover *,
+:root[saved-theme="dark"] .heimu:hover a {
+    color: #000000 !important;
 }
 
-/* 行内强调更克制，避免信息爆炸 */
-.callout[data-callout="infobox"] strong {
-  font-weight: 600;
+/* ===== 清除浮动（防止内容重叠）===== */
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content hr {
+    clear: both;
+}
+
+/* ===== 移动端响应式 ===== */
+
+@media (max-width: 768px) {
+    .callout[data-callout="infobox"] {
+        float: none;
+        width: 100%;
+        margin: 1em 0;
+    }
+    
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4,
+    .content h5,
+    .content h6,
+    .content hr {
+        clear: none;
+    }
 }
