@@ -2,170 +2,83 @@
 
 // put your custom CSS here!
 
-/* ===== Wiki Infobox 信息框样式 ===== */
-
-/* 基础信息框样式 */
-.infobox {
-  float: right;
-  clear: right;
-  width: 300px;
-  margin: 0 0 1em 1em;
-  padding: 1em;
-  background: var(--lightgray);
-  border: 1px solid var(--gray);
-  border-radius: 8px;
-  font-size: 0.9em;
+/* 极简右侧信息框 */
+.callout[data-callout="infobox"] {
+    /* 布局控制 */
+    float: right;
+    clear: right;
+    width: 300px;
+    margin: 0 0 1em 1em;
+    
+    /* 隐藏图标 */
+    .callout-icon {
+        display: none;
+    }
+    
+    /* 标题居中 */
+    .callout-title-inner {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .callout-title {
+        justify-content: center;
+    }
+    
+    /* 为高亮语法创建的小标题样式 */
+    mark {
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        line-height: inherit;
+        font-size: 0.9em;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: none !important; /* 去掉高亮背景色 */
+        color: inherit !important; /* 继承文字颜色 */
+        -webkit-text-fill-color: inherit; /* 确保 Safari 也继承颜色 */
+        all: unset; /* 重置所有属性 */
+        all: revert; /* 先重置 */
+        display: inline-block; /* 再重新设置 */
+        text-align: center;
+        font-weight: bold;
+        line-height: inherit;
+        font-size: 0.9em;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
 }
 
-/* 深色模式下的信息框 */
-:root[saved-theme="dark"] .infobox {
-  background: var(--darkgray);
-  border-color: var(--gray);
+/* 清除浮动 */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.markdown-preview-view hr {
+    clear: right;
 }
 
-/* 信息框标题 */
-.infobox h1,
-.infobox h2,
-.infobox h3 {
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  text-align: center;
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 0.3em;
-}
-
-/* 信息框图片 */
-.infobox img {
-  width: 100%;
-  height: auto;
-  margin: 0.5em 0;
-  border-radius: 4px;
-}
-
-/* 信息框列表 */
-.infobox ul,
-.infobox ol {
-  margin: 0.5em 0;
-  padding-left: 1.5em;
-}
-
-/* 信息框段落 */
-.infobox p {
-  margin: 0.5em 0;
-}
-
-/* 信息框内的强调文本 */
-.infobox strong {
-  color: var(--secondary);
-}
-
-/* ===== 黑幕效果（适配深色模式）===== */
-
-/* 默认黑幕样式 */
-.heimu {
-  background-color: #252525;
-  color: #252525;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  padding: 0 2px;
-}
-
-/* 鼠标悬停时显示文字 */
-.heimu:hover,
-.heimu:active {
-  background-color: transparent;
-  color: var(--dark);
-}
-
-/* 深色模式下的黑幕 */
-:root[saved-theme="dark"] .heimu {
-  background-color: #f0f0f0;
-  color: #f0f0f0;
-}
-
-:root[saved-theme="dark"] .heimu:hover,
-:root[saved-theme="dark"] .heimu:active {
-  background-color: transparent;
-  color: var(--light);
-}
-
-/* ===== Callout 样式优化（用于模拟 Infobox）===== */
-
-/* 自定义 callout 作为信息框 */
-.callout[data-callout="infobox"],
-.callout[data-callout="info-box"],
-.callout[data-callout="character"] {
-  float: right;
-  clear: right;
-  width: 300px;
-  margin: 0 0 1em 1em;
-  background: var(--lightgray);
-  border-left: 3px solid var(--secondary);
-}
-
-:root[saved-theme="dark"] .callout[data-callout="infobox"],
-:root[saved-theme="dark"] .callout[data-callout="info-box"],
-:root[saved-theme="dark"] .callout[data-callout="character"] {
-  background: var(--darkgray);
-}
-
-/* 让 callout 标题居中 */
-.callout[data-callout="infobox"] .callout-title,
-.callout[data-callout="info-box"] .callout-title,
-.callout[data-callout="character"] .callout-title {
-  justify-content: center;
-  font-weight: bold;
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-/* callout 内的图片 */
-.callout[data-callout="infobox"] img,
-.callout[data-callout="info-box"] img,
-.callout[data-callout="character"] img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-  margin: 0.5em 0;
-}
-
-/* ===== 移动端适配 ===== */
-
+/* 移动设备响应式 */
 @media (max-width: 768px) {
-  .infobox,
-  .callout[data-callout="infobox"],
-  .callout[data-callout="info-box"],
-  .callout[data-callout="character"] {
-    float: none;
-    width: 100%;
-    margin: 1em 0;
-  }
-}
-
-/* ===== 额外优化 ===== */
-
-/* 信息框内的表格 */
-.infobox table {
-  width: 100%;
-  font-size: 0.9em;
-}
-
-.infobox td:first-child {
-  font-weight: bold;
-  color: var(--secondary);
-  padding-right: 0.5em;
-}
-
-/* 选中文本时黑幕效果 */
-.heimu::selection {
-  background-color: var(--secondary);
-  color: var(--light);
-}
-
-:root[saved-theme="dark"] .heimu::selection {
-  background-color: var(--secondary);
-  color: var(--dark);
+    .callout[data-callout="infobox"] {
+        float: none;
+        width: 100%;
+        margin: 1em 0;
+    }
+    
+    .markdown-preview-view h1,
+    .markdown-preview-view h2,
+    .markdown-preview-view h3,
+    .markdown-preview-view h4,
+    .markdown-preview-view h5,
+    .markdown-preview-view h6,
+    .markdown-preview-view hr {
+        clear: none;
+    }
 }
 
 
