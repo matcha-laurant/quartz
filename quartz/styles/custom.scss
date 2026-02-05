@@ -2,118 +2,145 @@
 
 // put your custom CSS here!
 
-/* 极简右侧信息框 */
+/* =========================
+   Wiki Infobox 基础容器
+   ========================= */
+
 .callout[data-callout="infobox"] {
-    /* 布局控制 */
-    float: right;
-    clear: right;
-    width: 300px;
-    margin: 0 0 1em 1em;
-    
-    /* 隐藏图标 */
-    .callout-icon {
-        display: none;
-    }
-    
-    /* 标题居中 */
-    .callout-title-inner {
-        text-align: center;
-        width: 100%;
-    }
-    
-    .callout-title {
-        justify-content: center;
-    }
-    
-    /* 为高亮语法创建的小标题样式 */
-    mark {
-        display: inline-block;
-        text-align: center;
-        font-weight: bold;
-        line-height: inherit;
-        font-size: 0.9em;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        background: none !important; /* 去掉高亮背景色 */
-        color: inherit !important; /* 继承文字颜色 */
-        -webkit-text-fill-color: inherit; /* 确保 Safari 也继承颜色 */
-        all: unset; /* 重置所有属性 */
-        all: revert; /* 先重置 */
-        display: inline-block; /* 再重新设置 */
-        text-align: center;
-        font-weight: bold;
-        line-height: inherit;
-        font-size: 0.9em;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
+  float: right;
+  clear: right;
+  width: 300px;
+  margin: 0 0 1em 1em;
+  padding: 1em;
+
+  border-radius: 12px;
+  background: var(--background-secondary);
+  border: 1px solid var(--color-border-muted);
+  font-size: 0.9em;
 }
 
-/* 清除浮动 */
-.markdown-preview-view h1,
-.markdown-preview-view h2,
-.markdown-preview-view h3,
-.markdown-preview-view h4,
-.markdown-preview-view h5,
-.markdown-preview-view h6,
-.markdown-preview-view hr {
-    clear: right;
+/* 隐藏 callout 默认图标 */
+.callout[data-callout="infobox"] .callout-icon {
+  display: none;
 }
 
-/* 移动设备响应式 */
-@media (max-width: 768px) {
-    .callout[data-callout="infobox"] {
-        float: none;
-        width: 100%;
-        margin: 1em 0;
-    }
-    
-    .markdown-preview-view h1,
-    .markdown-preview-view h2,
-    .markdown-preview-view h3,
-    .markdown-preview-view h4,
-    .markdown-preview-view h5,
-    .markdown-preview-view h6,
-    .markdown-preview-view hr {
-        clear: none;
-    }
+/* 顶部标题（角色名） */
+.callout[data-callout="infobox"] .callout-title {
+  justify-content: center;
 }
 
+.callout[data-callout="infobox"] .callout-title-inner {
+  font-size: 1.15em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
 
-/* 黑幕容器：默认隐藏文字 */
+/* =========================
+   居中小标题（替代高亮）
+   使用 <div class="infobox-subtitle">
+   ========================= */
+
+.infobox-subtitle {
+  display: block;
+  margin: 0.9em 0 0.5em;
+  padding: 0.3em 0;
+
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+
+  opacity: 0.9;
+  border-top: 1px solid var(--color-border-muted);
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+/* =========================
+   Tabs 内图片区（可选）
+   ========================= */
+
+.callout[data-callout="infobox"] img {
+  display: block;
+  margin: 0.5em auto;
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+/* =========================
+   heimu：深浅模式反色 · 稳定版
+   ========================= */
+
 .heimu {
-    background-color: #252525 !important;
-    color: #252525 !important;
-    text-shadow: none !important;
-    text-decoration: none !important;
-    transition: color 0.13s linear !important;
-    padding: 0 2px !important;
-    border-radius: 2px !important;
+  position: relative;
+  padding: 0 0.3em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.15s ease;
 }
 
-/* 强制让内部所有元素继承父色 */
-.heimu *,
-.heimu *::before,
-.heimu *::after {
-    color: inherit !important;
-    text-decoration: inherit !important;
+/* 默认：隐藏所有文字（包括双链） */
+.heimu,
+.heimu * {
+  color: transparent !important;
+  text-decoration: none !important;
 }
 
-/* 鼠标悬停时所有文字显现 */
-.heimu:hover,
-.heimu:hover * {
-    color: #ffffff !important;
-    cursor: help !important;
+/* ========== 浅色模式 ==========
+   条件：没有进入任何 dark 判定
+   表现：黑幕 → hover 白字
+*/
+body:not(.dark)
+  :not(html[data-theme="dark"])
+  :not(.theme-dark)
+  .heimu {
+  background: rgba(0, 0, 0, 0.88);
 }
 
-/* 深色模式适配（同样逻辑） */
+body:not(.dark)
+  :not(html[data-theme="dark"])
+  :not(.theme-dark)
+  .heimu:hover,
+body:not(.dark)
+  :not(html[data-theme="dark"])
+  :not(.theme-dark)
+  .heimu:hover * {
+  color: #ffffff !important;
+}
+
+/* ========== 深色模式 ==========
+   命中任意一个即可
+*/
+body.dark .heimu,
+html[data-theme="dark"] .heimu,
 .theme-dark .heimu {
-    background-color: #000000 !important;
-    color: #000000 !important;
+  background: rgba(255, 255, 255, 0.9);
 }
+
+body.dark .heimu:hover,
+body.dark .heimu:hover *,
+html[data-theme="dark"] .heimu:hover,
+html[data-theme="dark"] .heimu:hover *,
 .theme-dark .heimu:hover,
 .theme-dark .heimu:hover * {
-    color: #ffffff !important;
+  color: #000000 !important;
+}
+
+
+/* =========================
+   列表与文本微调
+   ========================= */
+
+.callout[data-callout="infobox"] ul,
+.callout[data-callout="infobox"] ol {
+  padding-left: 1.2em;
+  margin: 0.4em 0;
+}
+
+.callout[data-callout="infobox"] li {
+  line-height: 1.5;
+}
+
+/* 行内强调更克制，避免信息爆炸 */
+.callout[data-callout="infobox"] strong {
+  font-weight: 600;
 }
