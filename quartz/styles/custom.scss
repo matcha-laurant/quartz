@@ -2,61 +2,82 @@
 
 // put your custom CSS here!
 
-/* 适配 Quartz 的 Infobox 容器 */
+/* 极简右侧信息框 */
 .callout[data-callout="infobox"] {
+    /* 布局控制 */
     float: right;
     clear: right;
     width: 300px;
     margin: 0 0 1em 1em;
-    background-color: var(--light); /* 确保背景色 */
-    border: 1px solid var(--lightgray);
     
-    /* 解决换行丢失问题：强制保留空白符 */
-    .callout-content {
-        white-space: pre-wrap; /* 关键：保留 Markdown 中的换行 */
-    }
-
     /* 隐藏图标 */
     .callout-icon {
         display: none;
     }
-
+    
     /* 标题居中 */
-    .callout-title {
-        justify-content: center;
+    .callout-title-inner {
         text-align: center;
+        width: 100%;
     }
     
-    .callout-title-inner {
-        font-weight: bold;
+    .callout-title {
+        justify-content: center;
     }
-
-    /* 适配高亮语法 (==小标题==) */
+    
+    /* 为高亮语法创建的小标题样式 */
     mark {
-        display: block; /* 改为 block 确保独占一行，解决居中问题 */
+        display: inline-block;
         text-align: center;
         font-weight: bold;
+        line-height: inherit;
         font-size: 0.9em;
-        margin: 10px 0 5px 0;
+        margin: 0;
         padding: 0;
         width: 100%;
-        background: transparent !important; /* 去掉黄色背景 */
-        color: var(--secondary) !important; /* 赋予一个主题色，更像小标题 */
-        border: none;
+        background: none !important; /* 去掉高亮背景色 */
+        color: inherit !important; /* 继承文字颜色 */
+        -webkit-text-fill-color: inherit; /* 确保 Safari 也继承颜色 */
+        all: unset; /* 重置所有属性 */
+        all: revert; /* 先重置 */
+        display: inline-block; /* 再重新设置 */
+        text-align: center;
+        font-weight: bold;
+        line-height: inherit;
+        font-size: 0.9em;
+        margin: 0;
+        padding: 0;
+        width: 100%;
     }
 }
 
-/* 清除浮动：Quartz 的文章容器通常是 .article */
-.article h1, .article h2, .article h3, .article hr {
+/* 清除浮动 */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.markdown-preview-view hr {
     clear: right;
 }
 
-/* 响应式调整 */
+/* 移动设备响应式 */
 @media (max-width: 768px) {
     .callout[data-callout="infobox"] {
         float: none;
         width: 100%;
         margin: 1em 0;
+    }
+    
+    .markdown-preview-view h1,
+    .markdown-preview-view h2,
+    .markdown-preview-view h3,
+    .markdown-preview-view h4,
+    .markdown-preview-view h5,
+    .markdown-preview-view h6,
+    .markdown-preview-view hr {
+        clear: none;
     }
 }
 
