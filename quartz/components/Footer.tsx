@@ -13,17 +13,29 @@ export default ((opts?: Options) => {
     const links = opts?.links ?? []
     return (
       <footer class={`${displayClass ?? ""}`}>
+        <hr />
+        {/* 1. 你的版权声明 */}
         <p>
-          {i18n(cfg.locale).components.footer.createdWith}{" "}
-          <a href="https://quartz.jzhao.xyz/">Quartz v{version}</a> © {year}
+          © {year} <strong>DORIKURO</strong> | CC BY-NC-SA 4.0
         </p>
-        <ul>
+        <p style={{fontSize: "0.85em", marginTop: "-0.5rem"}}>
+         <strong>No AI training or generative use allowed.</strong>
+        </p>
+
+        {/* 2. 你的社交链接 */}
+        <ul class="footer-links">
           {Object.entries(links).map(([text, link]) => (
             <li>
-              <a href={link}>{text}</a>
+              <a href={link} target="_blank" rel="noopener noreferrer">{text}</a>
             </li>
           ))}
         </ul>
+
+        {/* 3. Quartz 作者声明 */}
+        <p style={{fontSize: "0.8em", opacity: 0.6}}>
+          {i18n(cfg.locale).components.footer.createdWith}{" "}
+          <a href="https://quartz.jzhao.xyz/">Quartz v{version}</a>
+        </p>
       </footer>
     )
   }

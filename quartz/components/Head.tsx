@@ -37,20 +37,39 @@ export default (() => {
     const ogImageDefaultPath = `https://${cfg.baseUrl}/static/og-image.png`
 
     return (
-      <head>
-        <title>{title}</title>
-        <meta charSet="utf-8" />
-        {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (
-          <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link rel="stylesheet" href={googleFontHref(cfg.theme)} />
-            {cfg.theme.typography.title && (
-              <link rel="stylesheet" href={googleFontSubsetHref(cfg.theme, cfg.pageTitle)} />
-            )}
-          </>
-        )}
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
+  <head>
+    <title>{title}</title>
+    <meta charset="utf-8" />
+    {/* --- 插入开始 --- */}
+    <script dangerouslySetInnerHTML={{ __html: `
+      function switchTab(containerId, tabIndex) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const buttons = container.querySelectorAll('.infobox-tab-button');
+        const contents = container.querySelectorAll('.infobox-tab-content');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        buttons[tabIndex].classList.add('active');
+        contents[tabIndex].classList.add('active');
+      }
+
+      // 自动初始化所有 Tab
+      document.addEventListener('nav', () => {
+        const containers = document.querySelectorAll('.infobox-tabs');
+        containers.forEach(container => {
+          const firstButton = container.querySelector('.infobox-tab-button');
+          const firstContent = container.querySelector('.infobox-tab-content');
+          if (firstButton && !container.querySelector('.infobox-tab-button.active')) {
+            firstButton.classList.add('active');
+          }
+          if (firstContent && !container.querySelector('.infobox-tab-content.active')) {
+            firstContent.classList.add('active');
+          }
+        });
+      });
+    ` }} />
+    {/* --- 插入结束 --- */}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <meta name="og:site_name" content={cfg.pageTitle}></meta>

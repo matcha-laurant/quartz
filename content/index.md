@@ -1,6 +1,5 @@
 ---
-title: Welcome to Quartz
+title: 欢迎光临Somnia。
 ---
-
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+这个应该是wiki的首页。  
+不知道写啥，大概就是锐意建设中吧！  
