@@ -9,9 +9,9 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
   return (
     <h2 class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
-        {/* 这里的 class 名和结构要配合下面的 CSS */}
-        <img class="logo-light" src="/static/logo.png" alt={title} />
-        <img class="logo-dark" src="/static/logo-dark.png" alt={title} />
+         {/* 使用 ${baseDir} 确保在 GitHub Pages 的子目录下也能找到图片 */}
+         <img class="logo-light" src={`${baseDir}/static/logo.png`} alt={title} />
+         <img class="logo-dark" src={`${baseDir}/static/logo-dark.png`} alt={title} />
       </a>
     </h2>
   )
