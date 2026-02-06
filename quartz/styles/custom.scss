@@ -1,12 +1,14 @@
 @use "./base.scss";
 
-/* ===== Infobox 样式（右侧浮动信息框）===== */
+/* ===== Infobox 样式 ===== */
 
 .callout[data-callout="infobox"] {
     float: right;
     clear: right;
     width: 300px;
     margin: 0 0 1em 1em;
+    padding: 0.6em;
+    -webkit-touch-callout: none;
 }
 
 .callout[data-callout="infobox"] .callout-icon {
@@ -14,15 +16,9 @@
 }
 
 .callout[data-callout="infobox"] .callout-title {
-    justify-content: center;
+    display: none;
 }
 
-.callout[data-callout="infobox"] .callout-title-inner {
-    text-align: center;
-    width: 100%;
-}
-
-/* 小标题样式 */
 .callout[data-callout="infobox"] .infobox-subtitle {
     display: inline-block;
     text-align: center;
@@ -34,30 +30,69 @@
     width: 100%;
 }
 
+/* ===== 目录框样式（填补空白）===== */
+
+.callout[data-callout="toc"],
+.callout[data-callout="info"] {
+    float: left;
+    clear: left;
+    width: 240px;
+    margin: 0 1em 1em 0;
+    background: var(--lightgray);
+    border-left: 3px solid var(--secondary);
+}
+
+:root[saved-theme="dark"] .callout[data-callout="toc"],
+:root[saved-theme="dark"] .callout[data-callout="info"] {
+    background: var(--darkgray);
+}
+
+/* 目录列表样式 */
+.callout[data-callout="toc"] ul,
+.callout[data-callout="info"] ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5em 0;
+}
+
+.callout[data-callout="toc"] li,
+.callout[data-callout="info"] li {
+    padding: 0.3em 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+.callout[data-callout="toc"] li:last-child,
+.callout[data-callout="info"] li:last-child {
+    border-bottom: none;
+}
+
 /* ===== Tab 切换功能 ===== */
 
 .infobox-tabs {
     width: 100%;
-    margin: 0.5em 0;
+    margin: 0.3em 0;
 }
 
 .infobox-tab-buttons {
     display: flex;
-    justify-content: center;
-    gap: 0.3em;
-    margin-bottom: 0.5em;
+    justify-content: flex-start;
+    gap: 0.2em;
+    margin-bottom: 0.4em;
 }
 
 .infobox-tab-button {
     background: #e0e0e0;
     border: 1px solid #ccc;
-    padding: 0.5em 1.2em;
+    padding: 0.3em 0.8em;
     cursor: pointer;
     font-weight: normal;
     color: #666;
     transition: all 0.2s ease;
-    border-radius: 6px 6px 0 0;
-    font-size: 0.9em;
+    border-radius: 4px 4px 0 0;
+    font-size: 0.85em;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
 }
 
 .infobox-tab-button:hover {
@@ -73,7 +108,6 @@
     box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
 }
 
-/* 深色模式 */
 :root[saved-theme="dark"] .infobox-tab-button {
     background: #2a2a2a;
     border-color: #444;
@@ -91,9 +125,12 @@
     border-bottom-color: #1a1a1a;
 }
 
-/* Tab 内容 */
 .infobox-tab-content {
     display: none;
+    position: relative;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .infobox-tab-content.active {
@@ -102,19 +139,46 @@
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
+/* ===== 图片样式 - 强制控制高度 ===== */
+
 .infobox-tab-content img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    margin: 0;
+    /* 强制覆盖所有默认样式 */
+    width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;  /* 调整这个值：300px, 350px, 400px, 450px */
+    min-height: auto !important;
+    object-fit: contain !important;  /* contain = 完整显示, cover = 裁剪填满 */
+    object-position: center !important;
+    border-radius: 6px !important;
+    margin: 0 auto !important;
+    display: block !important;
+    
+    /* 防保存 */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    pointer-events: none;
+    -webkit-touch-callout: none;
+}
+
+/* 透明遮罩层 */
+.infobox-tab-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: transparent;
 }
 
 /* ===== 黑幕效果 ===== */
@@ -170,14 +234,44 @@
     color: #000000 !important;
 }
 
-/* ===== 清除浮动 ===== */
+/* ===== 不清除浮动（多重覆盖）===== */
 
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content hr,
+h1, h2, h3, h4, h5, h6, hr,
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6,
+article hr,
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.page h5,
+.page h6 {
+    clear: none !important;
+}
 
+/* 但有时你可能想在某处手动清除浮动 */
+.clear-float {
+    clear: both !important;
+}
 
 /* ===== 移动端响应式 ===== */
 
 @media (max-width: 768px) {
-    .callout[data-callout="infobox"] {
+    /* 移动端不浮动，全宽显示 */
+    .callout[data-callout="infobox"],
+    .callout[data-callout="toc"],
+    .callout[data-callout="info"] {
         float: none;
         width: 100%;
         margin: 1em 0;
@@ -185,5 +279,16 @@
     
     .infobox-tab-buttons {
         flex-wrap: wrap;
+        justify-content: center;
     }
+    
+    .infobox-tab-content img {
+        max-height: 500px !important;
+    }
+}
+
+/* 虽然不能阻断所有爬虫，但能让一些简单的自动化脚本抓不到图 */
+img {
+    /* 配合我们之前的 pointer-events，增加属性标识 */
+    content-visibility: auto; 
 }
