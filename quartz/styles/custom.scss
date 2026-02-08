@@ -292,3 +292,237 @@ img {
     /* 配合我们之前的 pointer-events，增加属性标识 */
     content-visibility: auto; 
 }
+
+/*
+ * Quartz v4.5.2 纯 CSS 隐藏方案
+ * 将此文件内容添加到 quartz/styles/custom.scss
+ */
+
+/* ===================================
+   第一部分：隐藏 Explorer（文件树）中的文件
+   =================================== */
+
+/* 通用方法：隐藏包含特定文本的链接 */
+.explorer .folder-outer li {
+  /* 隐藏 secret.md */
+  &:has(a[data-for="explorer-content/secret.md"]),
+  &:has(a[href*="/secret"]:not([href*="/secrets"])),
+  
+  /* 隐藏包含 _hidden 的文件 */
+  &:has(a[href*="_hidden"]),
+  
+  /* 隐藏包含 _secret 的文件 */
+  &:has(a[href*="_secret"]),
+  
+  /* 隐藏包含 _alt 的文件 */
+  &:has(a[href*="_alt"]) {
+    display: none !important;
+  }
+}
+
+/* 更精确的选择器 - 直接针对文件名 */
+.explorer li[data-folderul] > a[href$="/secret"],
+.explorer li > a[href$="/secret"],
+.explorer a[href$="/secret"].internal,
+.explorer a[data-for$="/secret.md"] {
+  /* 隐藏链接本身 */
+  display: none !important;
+}
+
+/* 隐藏包含被隐藏链接的整个列表项 */
+.explorer li:has(> a[href$="/secret"]),
+.explorer li:has(> a[href*="_hidden"]),
+.explorer li:has(> a[href*="_secret"]),
+.explorer li:has(> a[href*="_alt"]) {
+  display: none !important;
+}
+
+/* ===================================
+   第二部分：隐藏搜索结果
+   =================================== */
+
+/* 搜索结果卡片 */
+#search-results .result-card:has(a[href$="/secret"]),
+#search-results .result-card:has(a[href*="_hidden"]),
+#search-results .result-card:has(a[href*="_secret"]),
+#search-results .result-card:has(a[href*="_alt"]) {
+  display: none !important;
+}
+
+/* 搜索结果链接 */
+#search-container a[href$="/secret"],
+#search-container a[href*="_hidden"],
+#search-container a[href*="_secret"],
+#search-container a[href*="_alt"] {
+  display: none !important;
+}
+
+/* 搜索结果列表项 */
+#search-results li:has(a[href$="/secret"]),
+#search-results li:has(a[href*="_hidden"]),
+#search-results li:has(a[href*="_secret"]),
+#search-results li:has(a[href*="_alt"]) {
+  display: none !important;
+}
+
+/* ===================================
+   第三部分：隐藏反向链接（Backlinks）
+   =================================== */
+
+/* 反向链接列表项 */
+.backlinks ul li:has(a[href$="/secret"]),
+.backlinks ul li:has(a[href*="_hidden"]),
+.backlinks ul li:has(a[href*="_secret"]),
+.backlinks ul li:has(a[href*="_alt"]) {
+  display: none !important;
+}
+
+.backlinks-container li:has(a[href$="/secret"]),
+.backlinks-container li:has(a[href*="_hidden"]),
+.backlinks-container li:has(a[href*="_secret"]),
+.backlinks-container li:has(a[href*="_alt"]) {
+  display: none !important;
+}
+
+/* 反向链接中的链接 */
+.backlinks a[href$="/secret"],
+.backlinks a[href*="_hidden"],
+.backlinks a[href*="_secret"],
+.backlinks a[href*="_alt"] {
+  display: none !important;
+}
+
+/* ===================================
+   第四部分：隐藏图谱（Graph）中的节点
+   =================================== */
+
+/* 图谱节点 */
+#graph-container circle[data-id$="/secret"],
+#graph-container circle[data-id*="_hidden"],
+#graph-container circle[data-id*="_secret"],
+#graph-container circle[data-id*="_alt"] {
+  display: none !important;
+}
+
+/* 图谱文本标签 */
+#graph-container text[data-id$="/secret"],
+#graph-container text[data-id*="_hidden"],
+#graph-container text[data-id*="_secret"],
+#graph-container text[data-id*="_alt"] {
+  display: none !important;
+}
+
+/* 图谱连线 */
+#graph-container line[data-source$="/secret"],
+#graph-container line[data-target$="/secret"],
+#graph-container line[data-source*="_hidden"],
+#graph-container line[data-target*="_hidden"],
+#graph-container line[data-source*="_secret"],
+#graph-container line[data-target*="_secret"],
+#graph-container line[data-source*="_alt"],
+#graph-container line[data-target*="_alt"] {
+  display: none !important;
+}
+
+/* ===================================
+   第五部分：隐藏页面列表（标签页、文件夹页等）
+   =================================== */
+
+/* 页面列表 */
+.page-listing li:has(a[href$="/secret"]),
+.page-listing li:has(a[href*="_hidden"]),
+.page-listing li:has(a[href*="_secret"]),
+.page-listing li:has(a[href*="_alt"]) {
+  display: none !important;
+}
+
+/* 文件列表 */
+ul.content-ul li:has(a[href$="/secret"]),
+ul.content-ul li:has(a[href*="_hidden"]),
+ul.content-ul li:has(a[href*="_secret"]),
+ul.content-ul li:has(a[href*="_alt"]) {
+  display: none !important;
+}
+
+/* ===================================
+   第六部分：保留正文中的链接（重要！）
+   =================================== */
+
+/* 正文内容区域的链接必须可见 */
+article a[href$="/secret"],
+article a[href*="_hidden"],
+article a[href*="_secret"],
+article a[href*="_alt"],
+
+.content a[href$="/secret"],
+.content a[href*="_hidden"],
+.content a[href*="_secret"],
+.content a[href*="_alt"],
+
+main .page a[href$="/secret"],
+main .page a[href*="_hidden"],
+main .page a[href*="_secret"],
+main .page a[href*="_alt"],
+
+.center .page a[href$="/secret"],
+.center .page a[href*="_hidden"],
+.center .page a[href*="_secret"],
+.center .page a[href*="_alt"],
+
+/* Quartz 4.5.2 的主要内容区域类名 */
+.article-content a[href$="/secret"],
+.article-content a[href*="_hidden"],
+.article-content a[href*="_secret"],
+.article-content a[href*="_alt"] {
+  display: inline !important;
+  /* 重要：覆盖任何隐藏规则 */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 确保正文链接的父元素也可见 */
+article,
+.content,
+.page,
+.article-content {
+  a[href$="/secret"],
+  a[href*="_hidden"],
+  a[href*="_secret"],
+  a[href*="_alt"] {
+    display: inline !important;
+  }
+}
+
+/* ===================================
+   第七部分：调试辅助（可选，部署时删除）
+   =================================== */
+
+/* 
+取消注释以下代码来测试：
+给隐藏的链接添加红色边框，确认它们被识别到了
+
+.explorer a[href$="/secret"],
+.explorer a[href*="_hidden"] {
+  border: 2px solid red !important;
+}
+*/
+
+/* ===================================
+   使用说明
+   =================================== */
+
+/*
+1. 将此文件内容复制到 quartz/styles/custom.scss
+
+2. 如果你的隐藏文件名不是 secret，修改以下部分：
+   - 将 "/secret" 改成你的文件名（如 "/puzzle"）
+   - 或添加新的选择器
+
+3. 重新构建 Quartz：
+   npx quartz build
+
+4. 测试：
+   - 检查 Explorer 是否隐藏了文件
+   - 尝试搜索文件名，看是否出现
+   - 在正文中点击链接，确认可以访问
+*/
