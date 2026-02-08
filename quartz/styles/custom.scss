@@ -91,8 +91,7 @@
     border-radius: 4px 4px 0 0;
     font-size: 0.85em;
     pointer-events: auto;
-    position: relative;
-    z-index: 2;
+    /* 移除了 position 和 z-index，避免移动端浮动问题 */
 }
 
 .infobox-tab-button:hover {
@@ -272,9 +271,18 @@ article hr,
     .callout[data-callout="infobox"],
     .callout[data-callout="toc"],
     .callout[data-callout="info"] {
-        float: none;
-        width: 100%;
-        margin: 1em 0;
+        float: none !important;
+        width: 100% !important;
+        margin: 1em 0 !important;
+        position: static !important;
+    }
+    
+    /* 重置所有可能导致浮动的元素 */
+    .infobox-tabs,
+    .infobox-tab-buttons,
+    .infobox-tab-button {
+        position: static !important;
+        z-index: auto !important;
     }
     
     .infobox-tab-buttons {
@@ -284,6 +292,11 @@ article hr,
     
     .infobox-tab-content img {
         max-height: 500px !important;
+    }
+    
+    /* 保持 tab-content 的相对定位（用于遮罩层）*/
+    .infobox-tab-content {
+        position: relative !important;
     }
 }
 
