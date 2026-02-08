@@ -14,12 +14,20 @@ export const sharedPageComponents: SharedLayout = {
   }),
 }
 
+// 提取通用的过滤器逻辑，避免代码重复并确保逻辑一致
+const secretFilter = (node: any) => {
+  // 统一使用可选链访问，确保不会因为路径缺失报错
+  const isSecret = node.file?.frontmatter?.secret === true || node.frontmatter?.secret === true
+  return !isSecret
+}
+
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
       component: Component.Breadcrumbs(),
-      condition: (page) => page.fileData.slug !== "index",
+      // 修正：使用可选链访问 slug，防止 page.fileData 为空时崩溃
+      condition: (page) => page?.fileData?.slug !== "index",
     }),
     Component.ArticleTitle(),
     Component.ContentMeta(),
@@ -31,38 +39,60 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Flex({
       components: [
         {
-          Component: Component.Search(),
+          Component: Component.Search({
+            filterFn: secretFilter
+          }as any),
           grow: true,
         },
         { Component: Component.Darkmode() },
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: secretFilter
+    }),
   ],
   right: [
-    Component.Graph(),
+    Component.Graph({
+      localGraph: {
+        removeTags: ["hidden"],
+      },
+      globalGraph: {
+        removeTags: ["hidden"],
+      },
+    }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.ConditionalRender({
+      component: Component.Breadcrumbs(),
+      condition: (page) => page?.fileData?.slug !== "index",
+    }),
+    Component.ArticleTitle(),
+    Component.ContentMeta()
+  ],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
     Component.Flex({
       components: [
         {
-          Component: Component.Search(),
+          Component: Component.Search({
+            filterFn: secretFilter
+          }as any),
           grow: true,
         },
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: secretFilter
+    }),
   ],
   right: [],
 }
