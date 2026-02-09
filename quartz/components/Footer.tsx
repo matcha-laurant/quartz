@@ -16,7 +16,7 @@ export default ((opts?: Options) => {
         <hr />
         {/* 1. 你的版权声明 */}
         <p>
-          © {year} <strong>DORIKURO</strong> | CC BY-NC-SA 4.0
+          © {year} <strong>DORIKURO</strong> | All rights reserved.
         </p>
         <p style={{fontSize: "0.85em", marginTop: "-0.5rem"}}>
          <strong>No AI training or generative use allowed.</strong>
