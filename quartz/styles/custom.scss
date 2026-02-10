@@ -506,36 +506,10 @@ article,
   }
 }
 
-/* ===================================
-   第七部分：调试辅助（可选，部署时删除）
-   =================================== */
-
-/* 
-取消注释以下代码来测试：
-给隐藏的链接添加红色边框，确认它们被识别到了
-
-.explorer a[href$="/secret"],
-.explorer a[href*="_hidden"] {
-  border: 2px solid red !important;
+hr {
+  border: 0;
+  border-top: 1px solid var(--gray);
+  margin: 2rem 0;
+  opacity: 0.6;
+  width: 100%;
 }
-*/
-
-/* ===================================
-   使用说明
-   =================================== */
-
-/*
-1. 将此文件内容复制到 quartz/styles/custom.scss
-
-2. 如果你的隐藏文件名不是 secret，修改以下部分：
-   - 将 "/secret" 改成你的文件名（如 "/puzzle"）
-   - 或添加新的选择器
-
-3. 重新构建 Quartz：
-   npx quartz build
-
-4. 测试：
-   - 检查 Explorer 是否隐藏了文件
-   - 尝试搜索文件名，看是否出现
-   - 在正文中点击链接，确认可以访问
-*/
