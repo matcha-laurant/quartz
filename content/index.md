@@ -11,7 +11,7 @@ title: 欢迎光临Somnia。
 ### 连接似是而非世界之信箱
 
 <div id="mailbox-container" style="width: 100%; margin: 20px 0;">
-<form id="elegant-form" action="https://formsubmit.co/el/fuyaye" method="POST" style="display: block;">
+<form id="elegant-form" action="https://formsubmit.co/matchalaurant@gmail.com" method="POST" style="display: block;">
 <input type="hidden" name="_captcha" value="false">
 <input type="text" name="_honey" style="display:none">
 <textarea id="msg-text" name="message" placeholder="把梦境、愿望与思绪投递到这里的话......" rows="3" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
